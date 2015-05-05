@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified Bootstrap JavaScript -->
+	<style>
+		.bar {
+			width: 50px;
+			background: red;
+			height: 200px;
+			margin-bottom: 20px;
+		}
+		
+		.bar__tooltip {
+			display: none;
+			position: absolute;
+			top: 150px;
+			padding: 10px;
+			width: 50%;
+			background: #ccc;
+			border: 1px solid #333;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1>Trigger Demo</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<h2>Bad</h2>
+				<p>Only applying mouseover and mouseout events on the bar graphic results in a bug where the tooltip disappears when hovering over it.</p>
+				
+				<!-- Bar with hover event -->
+				<div class="bar"></div>
+				
+				<!-- Tooltip for bar -->
+				<div class="bar__tooltip container">
+					<p>This is a tooltip. Hover over me and I will disappear.</p>
+					<a href="#" class="pull-right">View More</a>
+				</div>
+				
+				<pre>
+					<code>
+$('.bar').mouseover(function(){
+    $(this).next('.bar__tooltip').show();
+});
+
+$('.bar').mouseout(function(){
+    $(this).next('.bar__tooltip').hide();
+});
+					</code>
+				</pre>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h2>Good</h2>
+				<p>An example of using jQuery's <em>$.fn.trigger()</em> method to keep the tooltip shown when hovering over it.</p>
+				
+				<!-- Bar with hover event -->
+				<div class="bar"></div>
+				
+				<!-- Tooltip for bar -->
+				<div class="bar__tooltip bar__tooltip--trigger container">
+					<p>This is also a tooltip. Hover over me and I should stay in place.</p>
+					<a href="#" class="pull-right">View More</a>
+				</div>
+				
+				<pre>
+					<code>
+$('.bar__tooltip--trigger').mouseover(function(){
+    $(this).prev('.bar').trigger('mouseover');
+});
+
+$('.bar__tooltip--trigger').mouseout(function(){
+    $(this).prev('.bar').trigger('mouseout');
+});
+					</code>
+				</pre>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Latest compiled and minified jQuery JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	<!-- JavaScript for the tooltip demo -->
+	<script src="app.js"></script>
+</body>
+</html>
